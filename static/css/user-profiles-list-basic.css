@@ -1,0 +1,204 @@
+.equal {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+div[class*='col-'] {
+  flex:1 1 auto;
+  display: flex;
+}
+.panel {
+  flex:1 0 100%;
+}
+
+.user-profiles-list-basic{
+    line-height: 1;
+    list-style:none;
+    text-align: center;
+    margin:0;
+    padding:0;
+}
+
+.user-profiles-list-basic li{
+    display: inline-block;
+    box-sizing:border-box;
+    position: relative;
+
+    text-align:left;
+    font:normal 16px sans-serif;
+    padding: 15px 30px 15px 20px;
+    margin: 12px;
+
+    background-color:#72ca87;
+    border:1px solid #dbe3e7;
+    box-shadow: 0 2px 3px #dbe3e7;
+    border-radius: 40px;
+}
+
+.user-profiles-list-basic .user-avatar{
+    float: left;
+    width:100px;
+    text-align: left;
+}
+
+.user-profiles-list-basic .user-avatar img{
+    border-radius: 50%;
+    border:0;
+}
+
+.user-profiles-list-basic p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    text-align: left;
+    margin-top: 20px;
+    max-width:340px;
+}
+
+.user-profiles-list-basic p a{
+    color:#5d6569;
+    text-decoration: none;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.user-profiles-list-basic p span{
+    display: block;
+    font-size: 13px;
+    color:#808d93;
+    padding-top:4px;
+}
+
+.user-profiles-list-basic p.teammembers {
+    color:#e14150;
+}
+
+.user-profiles-list-basic .delete{
+    background-color:#de4a4a;
+    border-radius: 50%;
+    color:#fff;
+    font-size:13px;
+    line-height: 22px;
+    width:22px;
+    height: 22px;
+    position: absolute;
+    top:-10px;
+    right:-10px;
+    text-align: center;
+    text-decoration: none;
+
+}
+
+/* Making the list responsive */
+
+@media (max-width: 400px) {
+
+    .user-profiles-list-basic li{
+        margin: 10px 0;
+    }
+
+    .user-profiles-list-basic .delete{
+        top: 10px;
+        right: 10px;
+    }
+
+}
+
+/* The Modal (background) */
+  .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 200px;
+      right:10px;
+      top: 0;
+      width: 90%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      overflow-y: auto;
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      -webkit-animation-name: fadeIn; /* Fade in the background */
+      -webkit-animation-duration: 0.4s;
+      animation-name: fadeIn;
+      animation-duration: 0.4s
+  }
+  
+  /* Modal Content */
+  .modal-content {
+      position: fixed;
+      bottom: 200px;
+      background-color: #fefefe;
+      width: 60%;
+      height: 300px;
+      margin-left: 100px;
+      -webkit-animation-name: slideIn;
+      -webkit-animation-duration: 0.4s;
+      animation-name: slideIn;
+      animation-duration: 0.4s
+  }
+  
+  /* The Close Button */
+  .close {
+      color: white;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  
+  .modal-header {
+      padding: 2px 16px;
+      background-color: #5cb85c;
+      color: white;
+  }
+  
+  .modal-body {padding: 2px 16px;}
+  
+  .modal-footer {
+      padding: 2px 16px;
+      background-color: #5cb85c;
+      color: white;
+  }
+  
+  #contactModal .modal-body{
+      margin-top: 40px;
+      height: 120px;
+  }
+  
+    #contactModal .modal-footer{
+      margin-top: 55px;
+  }
+  
+  /* Add Animation */
+  @-webkit-keyframes slideIn {
+      from {bottom: -300px; opacity: 0}
+      to {bottom: 0; opacity: 1}
+  }
+  
+  @keyframes slideIn {
+      from {bottom: -300px; opacity: 0}
+      to {bottom: 0; opacity: 1}
+  }
+  
+  @-webkit-keyframes fadeIn {
+      from {opacity: 0}
+      to {opacity: 1}
+  }
+  
+  @keyframes fadeIn {
+      from {opacity: 0}
+      to {opacity: 1}
+  }
+
+
+

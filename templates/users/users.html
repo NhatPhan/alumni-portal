@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_block %}
+
+<ul class="user-profiles-list-basic" style="padding-left:190px;">
+
+    {% if userprofiles %}
+    {% for userprofile in userprofiles %}
+    <li style="width:330px;">
+
+        <a href="{% url 'profile' pk=userprofile.user.id %}" class="user-avatar">
+            <img src="{% get_media_prefix %}/{{ userprofile.image }}" width="80%" height="80px;" alt="Profile Image" />
+        </a>
+
+        <p>
+            <a href="{% url 'profile' pk=userprofile.user.id %}">{{ userprofile.user.first_name }} {{ userprofile.user.last_name }}</a>
+            
+        </p>
+        
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <br>
+            <p class="teammembers"><i class="fa fa-heartbeat" aria-hidden="true"></i><strong> Team Member List:</strong></p>
+            <div class="user-friend-list">
+              {% for teammate in userprofile.team_members.all %}
+              <a href="{% url 'profile' pk=teammate.user.id %}">
+                <img src="{% get_media_prefix %}/{{ teammate.image }}" height="40" width="40"  alt="people" class="img-circle">
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+    </li>
+    {% endfor %}
+    {% else %}
+      <row><h3>No user found!</h3></row>
+    {% endif %}
+
+</ul>
+{% endblock %}

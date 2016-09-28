@@ -1,0 +1,10 @@
+{% extends "authentication/base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-sm-offset-2 col-sm-3">
+      <h3>Email Verification</h3><hr/>
+    </div>
+  </div>
+  {% include "authentication/fragments/email_verification_form.html" %}
+{% endblock %}

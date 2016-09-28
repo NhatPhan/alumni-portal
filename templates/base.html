@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)/index.html -->
+<html class="st-layout ls-top-navbar ls-bottom-footer sidebar-l2 show-sidebar" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.gm-style-pbc{transition:opacity ease-in-out;background-color:rgba(0,0,0,0.45);text-align:center}.gm-style-pbt{font-size:22px;color:white;font-family:Roboto,Arial,sans-serif;position:relative;margin:0;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}</style><link type="text/css" rel="stylesheet" href="/static/ThemeKit_files/css"><style type="text/css">.gm-style .gm-style-cc span,.gm-style .gm-style-cc a,.gm-style .gm-style-mtc div{font-size:10px}</style><style type="text/css">@media print {  .gm-style .gmnoprint, .gmnoprint {    display:none  }}@media screen {  .gm-style .gmnoscreen, .gmnoscreen {    display:none  }}</style><style type="text/css">.gm-style{font-family:Roboto,Arial,sans-serif;font-size:11px;font-weight:400;text-decoration:none}.gm-style img{max-width:none}</style>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Vietabroader Alumni Portal</title>
+
+  <!-- Vendor CSS BUNDLE
+    Includes styling for all of the 3rd party libraries used with this module, such as Bootstrap, Font Awesome and others.
+    TIP: Using bundles will improve performance by reducing the number of network requests the client needs to make when loading the page. -->
+  <link href="/static/ThemeKit_files/all.css" rel="stylesheet">
+
+  <link href="/static/ThemeKit_files/app.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/user-profiles-list-basic.css">
+  
+  <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+  <script src="/static/js/jquery.formset.min.js"></script>
+  
+<style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style><style type="text/css">/**
+ * Style sheet used by new LibX tooltip code
+ */
+
+
+.libx-tooltip {
+    display: none;
+    overflow: visible;
+    padding: 5px;
+    z-index: 100;
+    background-color: #eee;
+    color: #000;
+    font-weight: normal;
+    font-style: normal;
+    text-align: left;
+    border: 2px solid #666;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+.libx-tooltip p {
+    /* override default 1em margin to keep paragraphs inside a tooltip closer together. */
+    margin: .2em;
+}
+</style><style type="text/css">/**
+ * Style sheet used by LibX autolinking code
+ */
+.libx-autolink {
+}
+
+</style></head>
+
+<body class="breakpoint-1024">
+
+  <!-- Wrapper required for sidebar transitions -->
+  <div class="st-container">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-main navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="#" data-effect="st-effect-1" data-toggle="sidebar-menu" class="toggle pull-left visible-xs"><i class="fa fa-bars"></i></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="#" data-toggle="sidebar-menu" data-effect="st-effect-1" class="toggle pull-right visible-xs "><i class="fa fa-comments"></i></a>
+          <a class="navbar-brand hidden-xs" style="background-color: #32C132;" href="/">VA Alumni Portal</a>
+        </div>
+        <div class="collapse navbar-collapse" id="main-nav">
+
+          <form class="navbar-form margin-none navbar-left hidden-xs " method="get" action="{% url 'users' %}">
+            <!-- Search -->
+            <div class="search-1">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="icon-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search by name or email" name="search">
+              </div>
+            </div>
+          </form>
+
+          <ul class="nav navbar-nav navbar-right hidden-xs" style="margin-right:19px;">
+            <li><a href="/authentication/logout/" class="btn btn-success"><strong>Logout</strong></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar component with st-effect-1 (set on the toggle button within the navbar) -->
+    <div class="sidebar left sidebar-size-2 sidebar-offset-0 sidebar-visible-desktop sidebar-visible-mobile sidebar-skin-dark" id="sidebar-menu" data-type="collapse">
+      <div data-scrollable="" style="overflow-y: hidden; outline: none;" tabindex="0">
+        <ul class="sidebar-menu">
+          <li class=""><a href="{% url 'profile' pk=request.user.id %}"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+          <li class=""><a href="{% url 'users' %}"><i class="fa fa-group"></i> <span>Users</span></a></li>
+          <li class=""><a href="# fa-newspaper-o"><i class="fa fa-newspaper-o"></i> <span>News</span></a></li>
+          <!-- Sample 2 Level Collapse -->
+        </ul>
+      </div>
+    <div id="ascrail2000" class="nicescroll-rails" style="width: 5px; z-index: 2; cursor: default; position: absolute; top: 0px; left: 194px; height: 528px; opacity: 0; display: block;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 292px; border: 0px; border-radius: 5px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div></div>
+
+    {% block body_block %}{% endblock %}
+    
+    <!-- Footer -->
+    <footer class="footer">
+      <strong>Vietabroader </strong>Copyright 2016
+    </footer>
+    <!-- // Footer -->
+
+  </div>
+  <!-- /st-container -->
+
+  <!-- Inline Script for colors and config objects; used by various external scripts; -->
+  <script>
+    var colors = {
+      "danger-color": "#e74c3c",
+      "success-color": "#81b53e",
+      "warning-color": "#f0ad4e",
+      "inverse-color": "#2c3e50",
+      "info-color": "#2d7cb5",
+      "default-color": "#6e7882",
+      "default-light-color": "#cfd9db",
+      "purple-color": "#9D8AC7",
+      "mustard-color": "#d4d171",
+      "lightred-color": "#e15258",
+      "body-bg": "#f6f6f6"
+    };
+    var config = {
+      theme: "social-1",
+      skins: {
+        "default": {
+          "primary-color": "#16ae9f"
+        },
+        "orange": {
+          "primary-color": "#e74c3c"
+        },
+        "blue": {
+          "primary-color": "#4687ce"
+        },
+        "purple": {
+          "primary-color": "#af86b9"
+        },
+        "brown": {
+          "primary-color": "#c3a961"
+        }
+      }
+    };
+  </script>
+  
+  <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+
+</body><umsdataelement id="UMSSendDataEventElement"></umsdataelement></html>
