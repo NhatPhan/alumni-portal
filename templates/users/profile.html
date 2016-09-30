@@ -30,10 +30,14 @@
           $(".inline.{{ job_form.prefix }}").formset({
               prefix: "{{ job_form.prefix }}",
           })
+          $(".inline.{{ location_form.prefix }}").formset({
+              prefix: "{{ location_form.prefix }}",
+          })
       })
   </script>
 
 {% block body_block %}
+
 <!-- sidebar effects OUTSIDE of st-pusher: -->
     <!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
 
@@ -57,7 +61,7 @@
                 <div class="width-250 width-auto-xs">
                   <div class="panel panel-default widget-user-1 text-center">
                     <div class="avatar">
-                      <img src="{% get_media_prefix %}/{{ userprofile.image }}" alt="user" class="img-circle" height="50%" width="50%">
+                      <img src="{% get_media_prefix %}/{{ userprofile.image }}" alt="user" height="50%" width="50%">
                       <h3>{{ object.user.first_name }} {{ object.user.last_name }}</h3>
                       {% if object in request.user.userprofile.team_members.all %}
                         <a href="#" class="btn btn-success"> <i class="fa fa-group"></i>Team Member</a>
@@ -65,101 +69,11 @@
                         <a href="{% url 'add_team_member' request.user.id object.user.id %}" class="btn btn-success">Add to My Team Members <i class="fa fa-fw"></i></a>
                       {% endif %}
                     </div>
-                    <div class="profile-icons margin-none">
-                        <span>Biography</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="expandable-content">
-                          <p>{{ object.biography }}</p>
-                        </div>
-                        {% if object.user.id == request.user.id %}
-                        <button class="btn btn-primary btn-sm" id="bioModalBtn">Edit</button>
-                        {% endif %}
-                    </div>
-                  </div>
-                  <!-- The Modal -->
-                      <div id="bioModal" class="modal">
-                        
-                        <form class="form-horizontal form-group" id="bio_form" method="post">
-                        {% csrf_token %}
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <span class="close">&times</span>
-                            <h4>Write Your Biography</h4>
-                          </div>
-                          <div class="modal-body">
-                            {{ form.id }}
-                            <div class="row">
-                              {{ form.biography|bootstrap_horizontal }}
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <div style="display: none">
-                            {{ project_form.management_form }}
-                            {% for project in project_form %}
-                            {% if project %}
-                              {{ project.id }}
-                              {{ project.user }}
-                              {{ project.name }}
-                              {{ project.from_date }}
-                              {{ project.to_date }}
-                              {{ project.description }}
-                            {% endif %}
-                            {% endfor %}
-                            
-                            {{ education_form.management_form }}
-                            {% for education in education_form %}
-                            {% if education %}
-                              {{ education.id }}
-                              {{ education.user }}
-                              {{ education.school }}
-                              {{ education.class_of }}
-                              {{ education.major }}
-                              {{ education.achievements }}
-                              {{ education.activities }}
-                            {% endif %}
-                            {% endfor %}
-                            
-                            {{ job_form.management_form }}
-                            {% for job in job_form %}
-                            {% if job %}
-                              {{ job.id }}
-                              {{ job.user }}
-                              {{ job.title }}
-                              {{ job.from_date }}
-                              {{ job.to_date }}
-                              {{ job.location }}
-                              {{ job.description }}
-                            {% endif %}
-                            {% endfor %}
-                            </div>
-                            <input type="submit" name="submit" class="btn btn-success" value="Update" />
-                          </div>
-                        </div>
-                      
-                       </form>
-                      </div>
-
-                  <!-- Contact -->
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <i class="fa fa-link"></i> Contact
-                      {% if object.user.id == request.user.id %}
-                      <button class="btn btn-primary btn-sm" id="contactModalBtn">Edit</button>
-                      {% endif %}
-                    </div>
-                    <ul class="icon-list icon-list-block">
-                      <li><i class="fa fa-envelope fa-fw"></i> {{ object.user.email }}</li>
-                      <li><i class="fa fa-envelope fa-fw"></i> {{ object.personal_email }}</li>
-                      <li><i class="fa fa-facebook fa-fw"></i> <a href="{{ object.facebook }}">Facebook</a></li>
-                      <li><i class="fa fa-behance fa-fw"></i> <a href="{{ object.linkedin }}">Linkedin</a></li>
-                    </ul>
                   </div>
                   <!-- The Modal -->
                       <div id="contactModal" class="modal">
                         
-                        <form class="form-horizontal form-group" id="about_form" method="post">
+                        <form class="form-horizontal form-group" id="contact_form" method="post">
                         {% csrf_token %}
                         <!-- Modal content -->
                         <div class="modal-content">
@@ -221,15 +135,45 @@
                               {{ job.description }}
                             {% endif %}
                             {% endfor %}
+                            
+                            {{ location_form.management_form }}
+                            {{ location_form.as_p }}
+
+                            {{ form.dateofbirth }}
+
+                            {{ form.field_of_work }}
+
+                            {{ form.gender }}
+
+                            {{ form.hobby }}
+                            
+                            {{ form.biography }}
                             </div>
                             <input type="submit" name="submit" class="btn btn-success" value="Update" />
+                            </div>
                           </div>
-                        </div>
                       
                        </form>
                       </div>
+                  <!-- Contact -->
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <i class="fa fa-link"></i> Contact
+                      {% if object.user.id == request.user.id %}
+                      <button class="btn btn-primary btn-sm" id="contactModalBtn">Edit</button>
+                      {% endif %}
+                    </div>
+                    <ul class="icon-list icon-list-block">
+                      <li><i class="fa fa-envelope fa-fw"></i> {{ object.user.email }}</li>
+                      <li><i class="fa fa-envelope fa-fw"></i> {{ object.personal_email }}</li>
+                      <li><i class="fa fa-facebook fa-fw"></i> <a href="{{ object.facebook }}">Facebook</a></li>
+                      <li><i class="fa fa-linkedin fa-fw"></i> <a href="{{ object.linkedin }}">Linkedin</a></li>
+                    </ul>
+                  </div>
+                  
                 </div>
               </div>
+            
               <div class="media-body">
 
                 <div class="row equal">
@@ -263,12 +207,6 @@
                           </li>
                           <li class="padding-v-5">
                             <div class="row">
-                              <div class="col-sm-4"><span class="text-muted">Lives in</span></div>
-                              <div class="col-sm-8">{{ object.address }}</div>
-                            </div>
-                          </li>
-                          <li class="padding-v-5">
-                            <div class="row">
                               <div class="col-sm-4"><span class="text-muted">Hobbies</span></div>
                               <div class="col-sm-8">{{ object.hobby }}</div>
                             </div>
@@ -297,9 +235,6 @@
                             </div>
                             <div class="row">
                               {{ form.gender|bootstrap_horizontal }}
-                            </div>
-                            <div class="row">
-                              {{ form.address|bootstrap_horizontal }}
                             </div>
                             <div class="row">
                               {{ form.hobby|bootstrap_horizontal }}
@@ -344,6 +279,17 @@
                               {{ job.description }}
                             {% endif %}
                             {% endfor %}
+                            
+                            {{ location_form.management_form }}
+                            {{ location_form.as_p }}
+                            
+                            {{ form.personal_email }}
+
+                            {{ form.linkedin }}
+
+                            {{ form.facebook }}
+                            
+                            {{ form.biography }}
                             </div>
                             <input type="submit" name="submit" class="btn btn-success" value="Update" />
                           </div>
@@ -362,8 +308,8 @@
                         <ul class="list-group">
                           {% for teammate in object.team_members.all %}
                             <li class="list-group-item col-md-2">
-                              <a href="{% url 'profile' pk=teammate.user.id %}">
-                                <img src="{% get_media_prefix %}/{{ teammate.image }}" height="40" width="40" alt="people">
+                              <a href="{% url 'profile' pk=teammate.user.id %}" style="padding-left:5px;">
+                                <img src="{% get_media_prefix %}/{{ teammate.image }}" height="50" width="50" alt="people">
                               </a>
                             </li>
                           {% endfor %}
@@ -425,6 +371,25 @@
                               {{ job.description }}
                             {% endif %}
                             {% endfor %}
+                            
+                            {{ location_form.management_form }}
+                            {{ location_form.as_p }}
+                            
+                            {{ form.personal_email }}
+
+                            {{ form.linkedin }}
+
+                            {{ form.facebook }}
+                            
+                            {{ form.dateofbirth }}
+
+                            {{ form.field_of_work }}
+
+                            {{ form.gender }}
+
+                            {{ form.hobby }}
+                            
+                            {{ form.biography }}
                             </div>
                             <input type="submit" name="submit" class="btn btn-success" value="Update" />
                           </div>
@@ -520,6 +485,25 @@
                               {{ job.description }}
                             {% endif %}
                             {% endfor %}
+                            
+                            {{ location_form.management_form }}
+                            {{ location_form.as_p }}
+                            
+                            {{ form.personal_email }}
+
+                            {{ form.linkedin }}
+
+                            {{ form.facebook }}
+                            
+                            {{ form.dateofbirth }}
+
+                            {{ form.field_of_work }}
+
+                            {{ form.gender }}
+
+                            {{ form.hobby }}
+                            
+                            {{ form.biography }}
                             </div>
                             <input type="submit" name="submit" class="btn btn-success" value="Update" />
                           </div>
@@ -619,6 +603,25 @@
                               {{ education.activities }}
                             {% endif %}
                             {% endfor %}
+                            
+                            {{ location_form.management_form }}
+                            {{ location_form.as_p }}
+                            
+                            {{ form.personal_email }}
+
+                            {{ form.linkedin }}
+
+                            {{ form.facebook }}
+                            
+                            {{ form.dateofbirth }}
+
+                            {{ form.field_of_work }}
+
+                            {{ form.gender }}
+
+                            {{ form.hobby }}
+                            
+                            {{ form.biography }}
                             </div>
                             <input type="submit" name="submit" class="btn btn-success" value="Update" />
                           </div>
@@ -666,9 +669,184 @@
                       {% endfor %}
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <!-- The Modal -->
+                      <div id="bioModal" class="modal">
+                        <form class="form-horizontal form-group" id="bio_form" method="post">
+                        {% csrf_token %}
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <span class="close">&times</span>
+                            <h4>Write Your Biography</h4>
+                          </div>
+                          <div class="modal-body">
+                            {{ form.id }}
+                            <div class="row">
+                              {{ form.biography|bootstrap_horizontal }}
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <div style="display: none">
+                            {{ project_form.management_form }}
+                            {% for project in project_form %}
+                            {% if project %}
+                              {{ project.id }}
+                              {{ project.user }}
+                              {{ project.name }}
+                              {{ project.from_date }}
+                              {{ project.to_date }}
+                              {{ project.description }}
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {{ education_form.management_form }}
+                            {% for education in education_form %}
+                            {% if education %}
+                              {{ education.id }}
+                              {{ education.user }}
+                              {{ education.school }}
+                              {{ education.class_of }}
+                              {{ education.major }}
+                              {{ education.achievements }}
+                              {{ education.activities }}
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {{ job_form.management_form }}
+                            {% for job in job_form %}
+                            {% if job %}
+                              {{ job.id }}
+                              {{ job.user }}
+                              {{ job.title }}
+                              {{ job.from_date }}
+                              {{ job.to_date }}
+                              {{ job.location }}
+                              {{ job.description }}
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {{ location_form.management_form }}
+                            {{ location_form.as_p }}
+                            
+                            {{ form.personal_email }}
 
+                            {{ form.linkedin }}
+
+                            {{ form.facebook }}
+                            
+                            {{ form.dateofbirth }}
+
+                            {{ form.field_of_work }}
+
+                            {{ form.gender }}
+
+                            {{ form.hobby }}
+
+                            </div>
+                            <input type="submit" name="submit" class="btn btn-success" value="Update" />
+                          </div>
+                        </div>
+                      
+                       </form>
+                      </div>
+                      
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading panel-heading-gray">
+                        <i class="fa fa-industry"></i> Biography
+                        {% if object.user.id == request.user.id %}
+                        <button class="btn btn-primary btn-sm" id="bioModalBtn">Edit</button>
+                        {% endif %}
+                      </div>
+                       <div class="panel-body" style="padding:10px;">
+                        <ul class="list-unstyled profile-about margin-none">
+                          <li class="padding-v-5">
+                            <div class="row" style="margin:5px;">
+                              <p>{{ object.biography }}</p> 
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
+                      
+
+                </div>
+                <div class="row equal">
+                    <div class="panel panel-default" style="padding-left: 10px;">
+                      <form class="form-horizontal form-group" id="education_form" method="post">
+                      {% csrf_token %}
+                      {{ location_form.management_form }}
+                      <div class="panel-heading panel-heading-gray">
+                        <i class="fa fa-university"></i> Location
+                        <input type="submit" name="submit" class="btn btn-primary btn-sm" value="Update" />
+                      </div>
+                      <span class="label label-info">The location can be selected by dragging the marker. Please click "Update" upon making any change!</span>
+                      {% for form in location_form %}
+                      <div class="panel-body" style="margin-right:10px;">
+                        <h4><strong>{{ location.name }}</strong></h4>
+                        {{ form.media }}
+                        {{ form|bootstrap }}
+                      </div>
+                      {% endfor %}
+                      <div style="display: none">
+                            {{ project_form.management_form }}
+                            {% for project in project_form %}
+                            {% if project %}
+                              {{ project.id }}
+                              {{ project.user }}
+                              {{ project.name }}
+                              {{ project.from_date }}
+                              {{ project.to_date }}
+                              {{ project.description }}
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {{ education_form.management_form }}
+                            {% for education in education_form %}
+                            {% if education %}
+                              {{ education.id }}
+                              {{ education.user }}
+                              {{ education.school }}
+                              {{ education.class_of }}
+                              {{ education.major }}
+                              {{ education.achievements }}
+                              {{ education.activities }}
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {{ job_form.management_form }}
+                            {% for job in job_form %}
+                            {% if job %}
+                              {{ job.id }}
+                              {{ job.user }}
+                              {{ job.title }}
+                              {{ job.from_date }}
+                              {{ job.to_date }}
+                              {{ job.location }}
+                              {{ job.description }}
+                            {% endif %}
+                            {% endfor %}
+                            
+                            {{ form.personal_email }}
+
+                            {{ form.linkedin }}
+
+                            {{ form.facebook }}
+                            
+                            {{ form.dateofbirth }}
+
+                            {{ form.field_of_work }}
+
+                            {{ form.gender }}
+
+                            {{ form.hobby }}
+                            
+                            {{ form.biography }}
+                            </div>
+                      </form>
+                    </div>
+                </div>
                 </div>
 
               </div>
@@ -676,6 +854,9 @@
             </div>
 
           </div>
+          
+          <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
 
         <div id="ascrail2000" class="nicescroll-rails" style="width: 5px; z-index: auto; cursor: default; position: absolute; top: 71px; left: 1129px; height: 39px; display: none; opacity: 0;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; border: 0px; border-radius: 5px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails" style="height: 5px; z-index: auto; top: 105px; left: 280px; position: absolute; cursor: default; display: none; opacity: 0;"><div style="position: absolute; top: 0px; height: 5px; width: 0px; border: 0px; border-radius: 5px; left: 0px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div><div id="ascrail2003" class="nicescroll-rails" style="width: 5px; z-index: auto; cursor: default; position: absolute; top: 71px; left: 1129px; height: 39px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; border: 0px; border-radius: 5px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div><div id="ascrail2003-hr" class="nicescroll-rails" style="height: 5px; z-index: auto; top: 105px; left: 280px; position: absolute; cursor: default; display: none;"><div style="position: absolute; top: 0px; height: 5px; width: 0px; border: 0px; border-radius: 5px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div></div>
         <!-- /st-content-inner -->
@@ -687,51 +868,6 @@
     <!-- /st-pusher -->
     
     <script>
-
-    // Update About Modal
-    // Get the modal
-    var aboutModal = document.getElementById('aboutModal');
-    // Get the button that opens the modal
-    var aboutModalBtn = document.getElementById("aboutModalBtn");
-    // Get the <span> element that closes the modal
-    var aboutModalSpan = document.getElementsByClassName("close")[2];
-    // When the user clicks the button, open the modal
-    aboutModalBtn.onclick = function() {
-        aboutModal.style.display = "block";
-    }
-    // When the user clicks on <span> (x), close the modal
-    aboutModalSpan.onclick = function() {
-        aboutModal.style.display = "none";
-    }
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == aboutModal) {
-             aboutModal.style.display = "none";
-        }
-    }
-    
-    // Add Biography Modal
-    // Get the modal
-    var bioModal = document.getElementById('bioModal');
-    // Get the button that opens the modal
-    var bioModalBtn = document.getElementById("bioModalBtn");
-    // Get the <span> element that closes the modal
-    var bioModalSpan = document.getElementsByClassName("close")[0];
-    // When the user clicks the button, open the modal
-    bioModalBtn.onclick = function() {
-        bioModal.style.display = "block";
-    }
-    // When the user clicks on <span> (x), close the modal
-    bioModalSpan.onclick = function() {
-        bioModal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == bioModal) {
-             bioModal.style.display = "none";
-        }
-    }
     
     // Add Contact Modal
     // Get the modal
@@ -739,7 +875,7 @@
     // Get the button that opens the modal
     var contactModalBtn = document.getElementById("contactModalBtn");
     // Get the <span> element that closes the modal
-    var contactModalSpan = document.getElementsByClassName("close")[1];
+    var contactModalSpan = document.getElementsByClassName("close")[0];
     // When the user clicks the button, open the modal
     contactModalBtn.onclick = function() {
         contactModal.style.display = "block";
@@ -755,6 +891,29 @@
              contactModal.style.display = "none";
         }
     }
+
+    // Update About Modal
+    // Get the modal
+    var aboutModal = document.getElementById('aboutModal');
+    // Get the button that opens the modal
+    var aboutModalBtn = document.getElementById("aboutModalBtn");
+    // Get the <span> element that closes the modal
+    var aboutModalSpan = document.getElementsByClassName("close")[1];
+    // When the user clicks the button, open the modal
+    aboutModalBtn.onclick = function() {
+        aboutModal.style.display = "block";
+    }
+    // When the user clicks on <span> (x), close the modal
+    aboutModalSpan.onclick = function() {
+        aboutModal.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == aboutModal) {
+             aboutModal.style.display = "none";
+        }
+    }
+    
     
     // Add Project Modal
     // Get the modal
@@ -762,7 +921,7 @@
     // Get the button that opens the modal
     var projectModalBtn = document.getElementById("projectModalBtn");
     // Get the <span> element that closes the modal
-    var projectModalSpan = document.getElementsByClassName("close")[3];
+    var projectModalSpan = document.getElementsByClassName("close")[2];
     // When the user clicks the button, open the modal
     projectModalBtn.onclick = function() {
         projectModal.style.display = "block";
@@ -785,7 +944,7 @@
     // Get the button that opens the modal
     var educationModalBtn = document.getElementById("educationModalBtn");
     // Get the <span> element that closes the modal
-    var educationModalSpan = document.getElementsByClassName("close")[4];
+    var educationModalSpan = document.getElementsByClassName("close")[3];
     // When the user clicks the button, open the modal
     educationModalBtn.onclick = function() {
         educationModal.style.display = "block";
@@ -808,7 +967,7 @@
     // Get the button that opens the modal
     var jobModalBtn = document.getElementById("jobModalBtn");
     // Get the <span> element that closes the modal
-    var jobModalSpan = document.getElementsByClassName("close")[5];
+    var jobModalSpan = document.getElementsByClassName("close")[4];
     // When the user clicks the button, open the modal
     jobModalBtn.onclick = function() {
         jobModal.style.display = "block";
@@ -824,9 +983,33 @@
              jobModal.style.display = "none";
         }
     }
+    
+    // Add Biography Modal
+    // Get the modal
+    var bioModal = document.getElementById('bioModal');
+    // Get the button that opens the modal
+    var bioModalBtn = document.getElementById("bioModalBtn");
+    // Get the <span> element that closes the modal
+    var bioModalSpan = document.getElementsByClassName("close")[5];
+    // When the user clicks the button, open the modal
+    bioModalBtn.onclick = function() {
+        bioModal.style.display = "block";
+    }
+    // When the user clicks on <span> (x), close the modal
+    bioModalSpan.onclick = function() {
+        bioModal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == bioModal) {
+             bioModal.style.display = "none";
+        }
+    }    
+    
   
   </script>
-  
+
 
 {% endblock %}
 

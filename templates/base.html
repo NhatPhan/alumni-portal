@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!-- saved from url=(0062)/index.html -->
 <html class="st-layout ls-top-navbar ls-bottom-footer sidebar-l2 show-sidebar" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.gm-style-pbc{transition:opacity ease-in-out;background-color:rgba(0,0,0,0.45);text-align:center}.gm-style-pbt{font-size:22px;color:white;font-family:Roboto,Arial,sans-serif;position:relative;margin:0;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}</style><link type="text/css" rel="stylesheet" href="/static/ThemeKit_files/css"><style type="text/css">.gm-style .gm-style-cc span,.gm-style .gm-style-cc a,.gm-style .gm-style-mtc div{font-size:10px}</style><style type="text/css">@media print {  .gm-style .gmnoprint, .gmnoprint {    display:none  }}@media screen {  .gm-style .gmnoscreen, .gmnoscreen {    display:none  }}</style><style type="text/css">.gm-style{font-family:Roboto,Arial,sans-serif;font-size:11px;font-weight:400;text-decoration:none}.gm-style img{max-width:none}</style>
@@ -17,11 +18,13 @@
   
   <link rel="stylesheet" href="/static/css/user-profiles-list-basic.css">
   
-  <script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
   
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
   <script src="/static/js/jquery.formset.min.js"></script>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   
 <style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style><style type="text/css">/**
  * Style sheet used by new LibX tooltip code
@@ -81,14 +84,14 @@
             <!-- Search -->
             <div class="search-1">
               <div class="input-group">
-                <span class="input-group-addon"><i class="icon-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search by name or email" name="search">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="user's name or email" name="search">
               </div>
             </div>
           </form>
 
           <ul class="nav navbar-nav navbar-right hidden-xs" style="margin-right:19px;">
-            <li><a href="/authentication/logout/" class="btn btn-success"><strong>Logout</strong></a></li>
+            <li><a href="/authentication/logout/" class="btn" style="background-color:#32C132;"><strong>Logout</strong></a></li>
           </ul>
         </div>
       </div>
@@ -101,6 +104,7 @@
           <li class=""><a href="{% url 'profile' pk=request.user.id %}"><i class="fa fa-user"></i> <span>Profile</span></a></li>
           <li class=""><a href="{% url 'users' %}"><i class="fa fa-group"></i> <span>Users</span></a></li>
           <li class=""><a href="# fa-newspaper-o"><i class="fa fa-newspaper-o"></i> <span>News</span></a></li>
+          <li class=""><a href="{% url 'map' %}"><i class="fa fa-map"></i> <span>VA Map</span></a></li>
           <!-- Sample 2 Level Collapse -->
         </ul>
       </div>

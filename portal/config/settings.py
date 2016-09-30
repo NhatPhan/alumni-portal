@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'users',
     'bootstrapform',
     'widget_tweaks',
+    'geoposition',
 ]
 
 SITE_ID = 1
@@ -151,9 +152,10 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_ADAPTER = 'authentication.adapter.MyAccountAdapter'
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_SIGNUP_FORM_CLASS = 'authentication.forms.SignupForm'
+AUTH_PROFILE_MODULE = 'authentication.models.UserProfile'
 
-LOGIN_URL = 'authentication/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/authentication/login/'
 
 
 REST_FRAMEWORK = {
@@ -172,3 +174,12 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyArB82fVC8XkEhDgY0_lX1s5F4YW4QqWKI'
+
+
+GEOPOSITION_MARKER_OPTIONS = {
+    'cursor': 'move'
+}
+
+

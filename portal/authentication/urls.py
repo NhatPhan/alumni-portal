@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from authentication import views
 from django.views.generic import TemplateView, RedirectView
+from .views import MySignupView
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="authentication/login.html"), name='home'),

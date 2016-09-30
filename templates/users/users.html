@@ -3,11 +3,11 @@
 
 {% block body_block %}
 
-<ul class="user-profiles-list-basic" style="padding-left:190px;">
+<ul class="row equal user-profiles-list-basic" style="padding-left:210px;">
 
     {% if userprofiles %}
     {% for userprofile in userprofiles %}
-    <li style="width:330px;">
+    <li style="width:320px;">
 
         <a href="{% url 'profile' pk=userprofile.user.id %}" class="user-avatar">
             <img src="{% get_media_prefix %}/{{ userprofile.image }}" width="80%" height="80px;" alt="Profile Image" />
