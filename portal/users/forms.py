@@ -1,9 +1,9 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User
-from .models import UserProfile, Project, Education, Job
-from django.forms.widgets import SelectDateWidget
-
+from .models import UserProfile, Project, Education, Job, Location
+from django.forms.widgets import SelectDateWidget   
+        
 
 class UserProfileForm(forms.ModelForm):
     personal_email = forms.EmailField(required=False)
@@ -31,3 +31,5 @@ EducationFormSet = inlineformset_factory(UserProfile, Education, fields=('user',
 JobFormSet = inlineformset_factory(UserProfile, Job, fields=('user', 'title', 'from_date', 'to_date', 'location', 'description'), widgets={
     'from_date': SelectDateWidget(years=range(2000, 2030)), 'to_date': SelectDateWidget(years=range(2000, 2030))
 })
+
+LocationFormSet = inlineformset_factory(UserProfile, Location, fields=('user', 'name', 'address', 'city', 'zipcode', 'position'),max_num = 1, extra = 1, can_delete=False)

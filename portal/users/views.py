@@ -17,9 +17,15 @@ from django.core.exceptions import ValidationError
 
 from itertools import chain
 
-from .models import UserProfile, Project, Education, Job
+from .models import UserProfile, Project, Education, Job, Location
 from .serializers import UserSerializer, UserProfileSerializer, ProjectSerializer, EducationSerializer, JobSerializer
-from .forms import UserProfileForm, ProjectFormSet, EducationFormSet, JobFormSet
+from .forms import UserProfileForm, ProjectFormSet, EducationFormSet, JobFormSet, LocationFormSet
+
+@login_required
+def poi_list(request):
+    pois = Location.objects.all()
+    return render(request, 'users/map.html', {'pois': pois})
+
 
 @login_required
 def index(request):
@@ -43,20 +49,22 @@ class ProfileView(ModelFormMixin, DetailView):
         project_form = ProjectFormSet(instance=self.object)
         education_form = EducationFormSet(instance=self.object)
         job_form = JobFormSet(instance=self.object)
+        location_form = LocationFormSet(instance=self.object)
         return self.render_to_response(
             self.get_context_data(form=form,
-                                  project_form=project_form, education_form=education_form, job_form=job_form))
+                                  project_form=project_form, education_form=education_form, job_form=job_form, location_form=location_form))
     
     def get_success_url(self):
         return reverse('profile', kwargs={'pk': self.object.pk})
 
-    def get_context_data(self, form, project_form, education_form, job_form, **kwargs):
+    def get_context_data(self, form, project_form, education_form, job_form, location_form, **kwargs):
         user_profile = UserProfile.objects.get(user__id=self.kwargs.get('pk'))
         context = super(ProfileView, self).get_context_data(**kwargs)
         context['form'] = form
         context['project_form'] = project_form
         context['education_form'] = education_form
         context['job_form'] = job_form
+        context['location_form'] = location_form
         return context
         
     def get_object(self,**kwargs):
@@ -76,14 +84,15 @@ class ProfileView(ModelFormMixin, DetailView):
         project_form = ProjectFormSet(self.request.POST, instance=self.object)
         education_form = EducationFormSet(self.request.POST, instance=self.object)
         job_form = JobFormSet(self.request.POST, instance=self.object)
+        location_form = LocationFormSet(self.request.POST, instance=self.object)
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
-        if form.is_valid() and project_form.is_valid() and education_form.is_valid() and job_form.is_valid():
-            return self.form_valid(form, project_form, education_form, job_form)
+        if form.is_valid() and project_form.is_valid() and education_form.is_valid() and job_form.is_valid() and location_form.is_valid():
+            return self.form_valid(form, project_form, education_form, job_form, location_form)
         else:
-            return self.form_invalid(form, project_form, education_form, job_form)
+            return self.form_invalid(form, project_form, education_form, job_form, location_form)
     
-    def form_valid(self, form, project_form, education_form, job_form):
+    def form_valid(self, form, project_form, education_form, job_form, location_form):
         # Here, we would record the user's interest using the message
         # passed in form.cleaned_data['message']
         self.object = form.save()
@@ -93,16 +102,18 @@ class ProfileView(ModelFormMixin, DetailView):
         education_form.save()
         job_form.instance = self.object
         job_form.save()
+        location_form.instance = self.object
+        location_form.save()
         return HttpResponseRedirect(self.get_success_url())
     
-    def form_invalid(self, form, project_form, education_form, job_form):
+    def form_invalid(self, form, project_form, education_form, job_form, location_form):
         """
         Called if a form is invalid. Re-renders the context data with the
         data-filled forms and errors.
         """
         return self.render_to_response(
             self.get_context_data(form=form,
-                                  project_form=project_form, education_form=education_form, job_form=job_form))
+                                  project_form=project_form, education_form=education_form, job_form=job_form, location_form=location_form))
         
 
 class UserList(APIView):
