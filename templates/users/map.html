@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+
+{% block body_block %}
+<!-- sidebar effects OUTSIDE of st-pusher: -->
+<!-- st-effect-1, st-effect-2, st-effect-4, st-effect-5, st-effect-9, st-effect-10, st-effect-11, st-effect-12, st-effect-13 -->
+
+<!-- content push wrapper -->
+<div class="st-pusher" id="content">
+
+<!-- sidebar effects INSIDE of st-pusher: -->
+<!-- st-effect-3, st-effect-6, st-effect-7, st-effect-8, st-effect-14 -->
+
+<!-- this is the wrapper for the content -->
+<div class="st-content">
+
+<!-- extra div for emulating position:fixed of the menu -->
+<div class="st-content-inner">
+
+<div class="container-fluid">
+
+
+
+    <h1 style="text-align:center; color: #47ae43"><strong>Vietabroaders Around The World</strong></h1>
+    
+    <div id="map-canvas" style="margin:auto;"></div>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+    
+    <script>
+        function initialize() {
+            var map = new google.maps.Map(document.getElementById('map-canvas'));
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                zoom: 1,
+                minZoom: 1
+            };
+            function addMarker(lat, lng, title, iconUrl, isUser) {
+                var position = new google.maps.LatLng(lat, lng);
+                var marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: title,
+                    animation: google.maps.Animation.DROP,
+                    icon: iconUrl,
+                });
+                bounds.extend(position);
+                if(isUser) {
+                    map.setCenter(position);
+                    map.setZoom(1);    
+                }
+    
+            }
+            {% for poi in pois %}
+                {% if poi.user.id == request.user.id %}
+                    addMarker({{ poi.position.latitude }}, {{ poi.position.longitude }}, "{{ poi.user.user.first_name }} {{ poi.user.user.last_name }}", 'http://maps.google.com/mapfiles/ms/icons/red-dot.png', true);
+                {% else %}
+                    addMarker({{ poi.position.latitude }}, {{ poi.position.longitude }}, "{{ poi.user.user.first_name }} {{ poi.user.user.last_name }}", 'http://maps.google.com/mapfiles/ms/icons/green-dot.png', false);
+                {% endif %}
+            {% endfor %}
+    
+            map.setZoom(5);
+            map.fitBounds(bounds);
+        
+        }
+        
+        
+        function toggleBounce() {
+            if (marker.getAnimation() !== null) {
+              marker.setAnimation(null);
+            } else {
+              marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
+    
+        google.maps.event.addDomListener(window, 'load', initialize);
+        
+    </script>
+    
+</div>
+
+<div id="ascrail2000" class="nicescroll-rails" style="width: 5px; z-index: auto; cursor: default; position: absolute; top: 71px; left: 1129px; height: 39px; display: none; opacity: 0;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; border: 0px; border-radius: 5px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails" style="height: 5px; z-index: auto; top: 105px; left: 280px; position: absolute; cursor: default; display: none; opacity: 0;"><div style="position: absolute; top: 0px; height: 5px; width: 0px; border: 0px; border-radius: 5px; left: 0px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div><div id="ascrail2003" class="nicescroll-rails" style="width: 5px; z-index: auto; cursor: default; position: absolute; top: 71px; left: 1129px; height: 39px; display: none;"><div style="position: relative; top: 0px; float: right; width: 5px; height: 0px; border: 0px; border-radius: 5px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div><div id="ascrail2003-hr" class="nicescroll-rails" style="height: 5px; z-index: auto; top: 105px; left: 280px; position: absolute; cursor: default; display: none;"><div style="position: absolute; top: 0px; height: 5px; width: 0px; border: 0px; border-radius: 5px; background-color: rgb(22, 174, 159); background-clip: padding-box;"></div></div></div>
+<!-- /st-content-inner -->
+
+</div>
+<!-- /st-content -->
+
+</div>
+<!-- /st-pusher -->
+
+{% endblock %}
